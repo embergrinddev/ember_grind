@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --primary: #d15110;
+    --secondary: #e3636c;
+    --accent: #d3c3a2;
+}
+
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Text typing animation */
+.text-typing {
+    opacity: 0;
+    animation: slideIn 1s ease forwards;
+}
+
+.text-typing-delayed {
+    opacity: 0;
+    animation: slideIn 1s ease forwards;
+    animation-delay: 0.5s;
+}
+
+.text-typing-delayed-more {
+    opacity: 0;
+    animation: slideIn 1s ease forwards;
+    animation-delay: 1s;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Button hover effect */
+.btn-primary {
+    background-color: var(--primary);
+    color: var(--accent);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary);
+    transform: scale(1.05);
+}
+
+/* Loader */
+.loader {
+    border: 3px solid var(--accent);
+    border-radius: 50%;
+    border-top: 3px solid var(--primary);
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Active menu state */
+.sidebar-link.active {
+    color: white;
+    font-weight: 600;
+    position: relative;
+}
+
+.sidebar-link.active::after {
+    content: '';
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 20px;
+    background-color: #d3c3a2;
+    border-radius: 2px;
+}
+
+/* Smooth transitions */
+.sidebar-link {
+    transition: all 0.3s ease;
+}
+
+.sidebar-link:hover {
+    transform: translateX(4px);
+}
+
+/* Connect wallet button states */
+#connect-wallet.connected {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#connect-wallet.connected i {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+#connect-wallet.connected i:hover {
+    color: #ef4444;
+}
+#connect-wallet.error {
+    background-color: #ef4444;
+    color: white;
+}
