@@ -44,17 +44,25 @@ export class App {
             this.loadPage(window.location.hash.slice(1));
         });
     }
-
     async loadPage(pageName) {
         const mainContent = document.getElementById('main-content');
         if (!mainContent) return;
-
+    
         try {
+
             mainContent.innerHTML = '<div class="flex justify-center items-center h-full"><div class="loader"></div></div>';
             
+
             const pageModule = await import(`./pages/${pageName}.js`);
             const pageContent = await pageModule.default();
             mainContent.innerHTML = pageContent;
+    
+
+            if (pageName === 'dashboard' && document.getElementById('stake-form')) {
+                const { setupFormHandlers } = await import('./pages/dashboard.js');
+                setupFormHandlers();
+            }
+    
         } catch (error) {
             console.error('Error loading page:', error);
             mainContent.innerHTML = '<div class="text-red-500">Error loading page</div>';

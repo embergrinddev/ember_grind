@@ -1,43 +1,34 @@
-// import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+import { CONFIG } from '../config.js';
 
-// const supabaseUrl = '';
-// const supabaseKey = '';
+export const supabase = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
 
-// export const supabase = createClient(supabaseUrl, supabaseKey);
+export async function getActiveStake(walletAddress) {
+    console.log(walletAddress);
+    const { data, error } = await supabase
+        .from('stakes')
+        .select('*')
+        .eq('wallet_address', walletAddress)
+        .maybeSingle(); // Changed from .single() to .maybeSingle()
 
-// export async function getLeaderboard() {
-//     const { data, error } = await supabase
-//         .from('leaderboard')
-//         .select('*')
-//         .order('tokens_earned', { ascending: false });
+    if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+    }
 
-//     if (error) throw error;
-//     return data;
-// }
+    return data; 
+}
 
-// export async function getHallOfFame() {
-//     const { data, error } = await supabase
-//         .from('hall_of_fame')
-//         .select('*')
-//         .order('created_at', { ascending: false });
+export async function createStake(stakeData) {
+    const { data, error } = await supabase
+        .from('stakes')
+        .insert([stakeData])
+        .select()
+        .single();
 
-//     if (error) throw error;
-//     return data;
-// }
+    if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+    }
 
-// export async function createStakingGoal(walletAddress, category, amount, duration) {
-//     const { data, error } = await supabase
-//         .from('staking_goals')
-//         .insert([
-//             {
-//                 wallet_address: walletAddress,
-//                 category,
-//                 amount,
-//                 duration,
-//                 status: 'active'
-//             }
-//         ]);
-
-//     if (error) throw error;
-//     return data;
-// }
+    return data;
+}

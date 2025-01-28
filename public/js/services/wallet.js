@@ -1,3 +1,6 @@
+import Dashboard from '../pages/dashboard.js';
+
+
 let wallet = null;
 const WALLET_SESSION_KEY = 'ember_wallet_connected';
 
@@ -104,6 +107,10 @@ function updateWalletButton(publicKey = null, isConnected = false, error = false
                 e.stopPropagation();
                 await disconnectWallet();
             });
+        }
+        const mainContent = document.getElementById('main-content');
+        if (mainContent) {
+            mainContent.innerHTML = Dashboard();
         }
     } else {
         newButton.innerHTML = `
